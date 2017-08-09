@@ -1,11 +1,14 @@
-CIplot <- function(x, ...) UseMethod("CIplot")
+CIplot <-
+    function(dat, ...) UseMethod("CIplot")
 
 CIplot.htest <-
     function(dat,
-             log = FALSE, xlim = NULL, xlab = NULL, main = NULL, ...,
+             log = FALSE,
+             xlim = NULL, xlab = NULL, main = NULL,
              pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
              cilty = 1, cilwd = 1, cicol = "black",
-             v = NULL, vlty = 2, vlwd = 1,  vcol = "black")
+             v = NULL, vlty = 2, vlwd = 1,  vcol = "black",
+             ...)
 {
     est <- dat$estimate
     ci <- dat$conf.int
@@ -58,53 +61,53 @@ CIplot.htest <-
     box()
 }
 
-CIplot.Tukey <-
+
+CIplot.glm <-
     function(dat,
-             xlim = NULL, xlab = "Differences in mean", main = NULL, ...,
-             pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
-             cilty = 1, cilwd = 1, cicol = "black",
-             vlty = 2, vlwd = 1,  vcol = "black",
-             las = NULL)
+             conf.level = 0.95,
+             xlim = NULL, xlab = "Odds Ratio",
+             main = NULL,
+             pch = 21, pcol = "black",
+             pcolbg = "white", pcex = 1, cilty = 1, cilwd = 1,
+             cicol = "black", vlty = 2, vlwd = 1,  vcol = "black",
+             las = NULL,
+             ...)
 {
-    xi <- dat
-    yvals <- nrow(xi):1L
+    ci <- ORci(dat)
+    CIplot.OddsRatio(ci,
+                     conf.level = conf.level,
+                     xlim = NULL, xlab = xlab,
+                     main = main, ..., pch = pch, pcol = pcol,
+                     pcolbg = pcolbg, pcex = pcex,
+                     cilty = cilty, cilwd = cilwd,
+                     cicol = cicol, vlty = vlty, vlwd = vlwd,
+                     vcol = vcol,
+                     las = las,
+                     ...)
+}
 
-    if (is.null(xlim)) xlim <- c(min(dat[,1:3]), max(dat[,1:3]))
+ORci <-
+    function(dat, conf.level = 0.95)
+{
+    est <- coefficients(dat)
+    ci <- confint(dat, level = conf.level)
 
-    if (is.null(main)) {
-        main <- paste0(format(100 * attr(dat, "conf.level"), digits = 2L),
-                       "% confidence interval")
-    }
+    OR <- exp(cbind(est, ci)[-1,])
+    colnames(OR) <- c("OR", "lwr", "upr")
 
-    plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2L),
-         type = "n", axes = FALSE,
-         xlab = xlab, ylab = "",
-         xlim = xlim,
-         ylim = c(0.5, nrow(xi) + 0.5),
-         main = main)
-
-    axis(1, ...)
-    axis(2, at = nrow(xi):1,
-         labels = dimnames(xi)[[1L]], las = las)
-
-    abline(h = yvals, lty = 1, lwd = 1, col = "lightgray")
-    abline(v = 0, lty = vlty, lwd = vlwd, col = vcol)
-
-    arrows(xi[, "lwr"], yvals, xi[, "upr"], yvals,
-           code = 3, angle = 90, length = 0.15,
-           lty = cilty, lwd = cilwd, col = cicol)
-    points(xi[, 1], yvals, pch = pch, cex = pcex,
-           col = pcol, bg = pcolbg)
-
-    box()
+    attr(OR, "conf.level") <- conf.level
+    attr(OR, "class") <- "OddsRatio"
+    return(OR)
 }
 
 CIplot.OddsRatio <-
-    function (dat, xlim = NULL, xlab = "Odds Ratio",
-              main = NULL, ..., pch = 21, pcol = "black",
-              pcolbg = "white", pcex = 1, cilty = 1, cilwd = 1,
-              cicol = "black", vlty = 2, vlwd = 1,  vcol = "black",
-              las = NULL)
+    function(dat,
+             xlim = NULL, xlab = "Odds Ratio", main = NULL,
+             pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
+             cilty = 1, cilwd = 1, cicol = "black",
+             vlty = 2, vlwd = 1,  vcol = "black",
+             las = NULL,
+             ...)
 {
     xi <- dat
     yvals <- nrow(xi):1L
@@ -157,30 +160,83 @@ CI.posthocTGH <- function(dat)
   return(res)
 }
 
-CIplot.posthocTGH <- function(dat, ...)
+
+CIplot.posthocTGH <-
+    function(dat,
+             xlim = NULL, xlab = "Differences in mean", main = NULL,
+             pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
+             cilty = 1, cilwd = 1, cicol = "black",
+             vlty = 2, vlwd = 1,  vcol = "black",
+             las = NULL,
+             ...)
 {
     ci <- CI.posthocTGH(dat)
-    CIplot.Tukey(ci, ...)
+    CIplot.Tukey(ci,
+                 xlim = xlim, xlab = xlab, main = main,
+                 pch = pch, pcol = pcol, pcolbg = pcolbg, pcex = pcex,
+                 cilty = cilty, cilwd = cilwd, cicol = cicol,
+                 vlty = vlty, vlwd = vlwd,  vcol = vcol,
+                 las = las,
+                 ...)
 }
 
-
-ORci <- function(dat, conf.level = 0.95)
+CI.posthocTGH <-
+    function(dat)
 {
+  if (dat$input$method == 'tukey') {
+      tmp <- dat$output$tukey;
+  }
+  else if (dat$input$method == 'games-howell') {
+      tmp <- dat$output$games.howell;
+  }
 
-    est <- coefficients(dat)
-    ci <- confint(dat, level = conf.level)
+  res <- as.matrix(tmp[, 1:6])
+  colnames(res)[2:3] <- c("lwr", "upr")
 
-    OR <- exp(cbind(est, ci)[-1,])
-    colnames(OR) <- c("OR", "lwr", "upr")
-
-    attr(OR, "conf.level") <- conf.level
-    attr(OR, "class") <- "OddsRatio"
-    return(OR)
+  attr(res, "conf.level") <- dat$input$conf.level
+  attr(res, "class") <- "Tukey"
+  return(res)
 }
 
-CIplot.glm <- function(dat, conf.level = 0.95, ...)
+CIplot.Tukey <-
+    function(dat,
+             xlim = NULL, xlab = "Differences in mean", main = NULL,
+             pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
+             cilty = 1, cilwd = 1, cicol = "black",
+             vlty = 2, vlwd = 1,  vcol = "black",
+             las = NULL,
+             ...)
 {
-    ci <- ORci(dat)
-    CIplot.OddsRatio(ci, ...)
+    xi <- dat
+    yvals <- nrow(xi):1L
+
+    if (is.null(xlim)) xlim <- c(min(dat[,1:3]), max(dat[,1:3]))
+
+    if (is.null(main)) {
+        main <- paste0(format(100 * attr(dat, "conf.level"), digits = 2L),
+                       "% confidence interval")
+    }
+
+    plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2L),
+         type = "n", axes = FALSE,
+         xlab = xlab, ylab = "",
+         xlim = xlim,
+         ylim = c(0.5, nrow(xi) + 0.5),
+         main = main)
+
+    axis(1, ...)
+    axis(2, at = nrow(xi):1,
+         labels = dimnames(xi)[[1L]], las = las)
+
+    abline(h = yvals, lty = 1, lwd = 1, col = "lightgray")
+    abline(v = 0, lty = vlty, lwd = vlwd, col = vcol)
+
+    arrows(xi[, "lwr"], yvals, xi[, "upr"], yvals,
+           code = 3, angle = 90, length = 0.15,
+           lty = cilty, lwd = cilwd, col = cicol)
+    points(xi[, 1], yvals, pch = pch, cex = pcex,
+           col = pcol, bg = pcolbg)
+
+    box()
 }
 
