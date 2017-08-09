@@ -1,0 +1,129 @@
+* DESCRIPTION
+A function to plot confidential interval for
+ such as 'htest', 'glm' (logistic regression only!)
+ and 'posthocTGH' {userfriendlyscience} objects.
+
+** Usage
+*** 'htest' object
+#+BEGIN_SRC R 
+CIplot(dat,
+       log = FALSE, xlim = NULL, xlab = NULL, main = NULL, ...,
+       pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = "black",
+       v = NULL, vty = 2, vwd = 1,  vcol = "black")
+#+END_SRC
+
+*** 'glm' object (logistic regression only!)
+#+BEGIN_SRC R 
+CIplot(dat,
+       log = FALSE, xlim = NULL, xlab = "Odds Ratio", main = NULL, ...,
+       pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = "black",
+       vty = 2, vwd = 1,  vcol = "black",
+       las = NULL)
+#+END_SRC
+
+*** 'posthocTGH' object (Tukey or Games-Howell method)
+#+BEGIN_SRC R 
+CIplot(dat,
+       log = FALSE, xlim = NULL, xlab = "Differences in mean", main = NULL, ...,
+       pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = "black",
+       vty = 2, vwd = 1,  vcol = "black",
+       las = NULL)
+#+END_SRC
+
+*** Arguments
+- dat:
+  - 'htest' object, typically result of 't.test', 'binom.test',
+      or 'prop.test'.
+  - 'glm' object (logistic regression only)
+  - 'posthocTGH' object, result of 'posthocTGH' {userfriendlyscience}
+
+- log: (logical) if log is TRUE, the x axis is drawn logarithmically.
+        'htest' object only. Default is FALSE.
+- options of plot
+  - xlim: the x limits (x1, x2) of the plot.
+  - xlab: a title for the x axis: see 'title'.
+  - main: title to each plot-in addition to 'caption'.
+  - ...: other options for plot.
+- options of point
+  - pch: plotting 'character', i.e., symbol to use.
+  - pcol: color code or name.
+  - pcolgb: background (fill) color for the open plot symbols given by
+           'pch = 21:25'.
+  - pcex: character (or symbol) expansion.
+- options of confidence interval line
+  - cilty: line types.
+  - cilwd: line width.
+  - cicol: color code or name.
+- options of an additional line
+  - v: the x-value(s) for vertical line. 'htest' object only.
+  - lty: line types.
+  - lwd: line width.
+  - lcol: color code or name.
+
+* Examples
+** 'htest' object
+*** Difference [log = FALSE (default)]
+#+BEGIN_SRC R
+set.seed(1234)
+x <- rnorm(10, 10, 2); y <- rnorm(10, 8, 2)
+res <- t.test(x, y)
+CIplot(res)
+#+END_SRC
+
+#+BEGIN_SRC R
+res <- binom.test(20, 100, 0.3)
+CIplot(res)
+#+END_SRC
+
+#+BEGIN_SRC R
+dat <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
+res <- prop.test(dat)
+CIplot(res)
+
+res <- chisq.test(dat)
+CIplot(res)                  ## Warning and no plot
+#+END_SRC
+
+#+BEGIN_SRC R
+set.seed(1234)
+res <- cor.test(rnorm(10), rnorm(10))
+CIplot(res, xlim = c(-1, 1))
+#+END_SRC
+
+*** Ratio (log = TRUE)
+#+BEGIN_SRC R
+res <- var.test(1:10, (1:10)*1.5)
+CIplot(res, log = TRUE)
+#+END_SRC
+
+#+BEGIN_SRC R
+dat <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
+res <- fisher.test(dat)
+CIplot(res, log = TRUE)
+#+END_SRC
+
+#+BEGIN_SRC R
+library(exact2x2)
+res <- mcnemar.exact(dat)
+CIplot(res, log = TRUE)
+#+END_SRC
+
+** 'glm' object
+#+BEGIN_SRC R
+library(MASS)
+data(birthwt)
+GLM1 <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,
+            family = binomial)
+CIplot(GLM1, las = 1)
+#+END_SRC
+
+** 'posthocTGH' object
+#+BEGIN_SRC R
+library(userfriendlyscience)
+res <- posthocTGH(warpbreaks$breaks, warpbreaks$tension)
+CIplot(res, las = 1)
+#+END_SRC
+
