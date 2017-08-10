@@ -1,4 +1,5 @@
-CIplot <- function(x, ...) UseMethod("CIplot")
+CIplot <-
+    function(x, ...) UseMethod("CIplot")
 
 CIplot.htest <-
     function(x,
@@ -73,7 +74,7 @@ CIplot.glm <-
              ...)
 {
     ci <- ORci(x)
-    CIplot.OddsRatio(ci,
+    CIplot.ORci(ci,
                      conf.level = conf.level,
                      xlim = NULL, xlab = xlab,
                      main = main, ..., pch = pch, pcol = pcol,
@@ -95,11 +96,11 @@ ORci <-
     colnames(OR) <- c("OR", "lwr", "upr")
 
     attr(OR, "conf.level") <- conf.level
-    attr(OR, "class") <- "OddsRatio"
+    attr(OR, "class") <- "ORci"
     return(OR)
 }
 
-CIplot.OddsRatio <-
+CIplot.ORci <-
     function(x,
              xlim = NULL, xlab = "Odds Ratio", main = NULL,
              pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
