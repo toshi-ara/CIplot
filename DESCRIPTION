@@ -1,0 +1,16 @@
+Package: CIplot
+Type: Package
+Title: Functions to Plot Confidential Interval
+Version: 1.0
+Date: 2017-08-10
+Author: Toshiaki Ara
+Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
+Description: Plot interval confidence from the objects of statistical tests
+    such as t.test, var.test, prop.test and fisher.test ('htest' class),
+    logistic regression ('glm' function), and Tukey or Games-Howell test
+    ('posthocTGH' function in userfriendlyscience package).
+Imports: MASS
+Suggests: BSDA, fmsb, userfriendlyscience
+License: GPL-2
+URL: https://github.com/toshi-ara/CIplot
+BugReports: https://github.com/toshi-ara/CIplot/issues/

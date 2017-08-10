@@ -1,0 +1,12 @@
+export(CIplot, ORci, print.ORci)
+
+import(graphics, MASS)
+importFrom("stats", "coefficients", "confint")
+
+S3method(CIplot, htest)
+S3method(CIplot, glm)
+S3method(CIplot, ORci)
+S3method(CIplot, posthocTGH)
+S3method(CIplot, Tukey)
+S3method(print, ORci)
+
