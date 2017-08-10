@@ -130,9 +130,17 @@ CIplot(x, ...)
 \author{
 \packageAuthor{CIplot}
 }
-%% \note{
-%% %%  ~~further notes~~
-%% }
+\note{
+  \code{CIplot} was made based on \code{plot.TukeyHSD}.
+
+  \preformatted{
+    #  File src/library/stats/R/TukeyHSD.R
+    #  Part of the R package, https://www.R-project.org
+    #
+    #  Copyright (C) 2000-2001  Douglas M. Bates
+    #  Copyright (C) 2002-2015  The R Core Team
+}
+}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
