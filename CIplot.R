@@ -1,8 +1,8 @@
 CIplot <-
-    function(dat, ...) UseMethod("CIplot")
+    function(x, ...) UseMethod("CIplot")
 
 CIplot.htest <-
-    function(dat,
+    function(x,
              log = FALSE,
              xlim = NULL, xlab = NULL, main = NULL,
              pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
@@ -10,8 +10,8 @@ CIplot.htest <-
              v = NULL, vlty = 2, vlwd = 1,  vcol = "black",
              ...)
 {
-    est <- dat$estimate
-    ci <- dat$conf.int
+    est <- x$estimate
+    ci <- x$conf.int
     if (is.null(ci)) {
         warning("No information about confidential interval\n")
         return(invisible(NULL))
@@ -20,10 +20,10 @@ CIplot.htest <-
     if (length(est) == 2L) est <- est[1] - est[2]
 
     if (is.null(v)) {
-        if (is.null(dat$null.value)) {
+        if (is.null(x$null.value)) {
             v <- ifelse(log, 1, 0)
         } else {
-            v <- dat$null.value
+            v <- x$null.value
         }
     }
 
@@ -37,7 +37,7 @@ CIplot.htest <-
     }
 
     if (is.null(xlab)) {
-        xlab <- attr(dat$null.value, "names")
+        xlab <- attr(x$null.value, "names")
         if (is.null(xlab)) {
             xlab <- ifelse(log, "ratio", "difference")
         }
@@ -63,7 +63,7 @@ CIplot.htest <-
 
 
 CIplot.glm <-
-    function(dat,
+    function(x,
              conf.level = 0.95,
              xlim = NULL, xlab = "Odds Ratio",
              main = NULL,
@@ -73,7 +73,7 @@ CIplot.glm <-
              las = NULL,
              ...)
 {
-    ci <- ORci(dat)
+    ci <- ORci(x)
     CIplot.OddsRatio(ci,
                      conf.level = conf.level,
                      xlim = NULL, xlab = xlab,
@@ -87,10 +87,10 @@ CIplot.glm <-
 }
 
 ORci <-
-    function(dat, conf.level = 0.95)
+    function(x, conf.level = 0.95)
 {
-    est <- coefficients(dat)
-    ci <- confint(dat, level = conf.level)
+    est <- coefficients(x)
+    ci <- confint(x, level = conf.level)
 
     OR <- exp(cbind(est, ci)[-1,])
     colnames(OR) <- c("OR", "lwr", "upr")
@@ -101,7 +101,7 @@ ORci <-
 }
 
 CIplot.OddsRatio <-
-    function(dat,
+    function(x,
              xlim = NULL, xlab = "Odds Ratio", main = NULL,
              pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
              cilty = 1, cilwd = 1, cicol = "black",
@@ -109,13 +109,13 @@ CIplot.OddsRatio <-
              las = NULL,
              ...)
 {
-    xi <- dat
+    xi <- x
     yvals <- nrow(xi):1L
 
-    if (is.null(xlim)) xlim <- c(min(dat), max(dat))
+    if (is.null(xlim)) xlim <- c(min(x), max(x))
 
     if (is.null(main)) {
-        main <- paste0(format(100 * attr(dat, "conf.level"), digits = 2L),
+        main <- paste0(format(100 * attr(x, "conf.level"), digits = 2L),
                        "% confidence interval")
     }
 
@@ -143,26 +143,26 @@ CIplot.OddsRatio <-
 }
 
 
-CI.posthocTGH <- function(dat)
+CI.posthocTGH <- function(x)
 {
-  if (dat$input$method == 'tukey') {
-      tmp <- dat$output$tukey;
+  if (x$input$method == 'tukey') {
+      tmp <- x$output$tukey;
   }
-  else if (dat$input$method == 'games-howell') {
-      tmp <- dat$output$games.howell;
+  else if (x$input$method == 'games-howell') {
+      tmp <- x$output$games.howell;
   }
 
   res <- as.matrix(tmp[, 1:6])
   colnames(res)[2:3] <- c("lwr", "upr")
 
-  attr(res, "conf.level") <- dat$input$conf.level
+  attr(res, "conf.level") <- x$input$conf.level
   attr(res, "class") <- "Tukey"
   return(res)
 }
 
 
 CIplot.posthocTGH <-
-    function(dat,
+    function(x,
              xlim = NULL, xlab = "Differences in mean", main = NULL,
              pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
              cilty = 1, cilwd = 1, cicol = "black",
@@ -170,7 +170,7 @@ CIplot.posthocTGH <-
              las = NULL,
              ...)
 {
-    ci <- CI.posthocTGH(dat)
+    ci <- CI.posthocTGH(x)
     CIplot.Tukey(ci,
                  xlim = xlim, xlab = xlab, main = main,
                  pch = pch, pcol = pcol, pcolbg = pcolbg, pcex = pcex,
@@ -181,25 +181,25 @@ CIplot.posthocTGH <-
 }
 
 CI.posthocTGH <-
-    function(dat)
+    function(x)
 {
-  if (dat$input$method == 'tukey') {
-      tmp <- dat$output$tukey;
+  if (x$input$method == 'tukey') {
+      tmp <- x$output$tukey;
   }
-  else if (dat$input$method == 'games-howell') {
-      tmp <- dat$output$games.howell;
+  else if (x$input$method == 'games-howell') {
+      tmp <- x$output$games.howell;
   }
 
   res <- as.matrix(tmp[, 1:6])
   colnames(res)[2:3] <- c("lwr", "upr")
 
-  attr(res, "conf.level") <- dat$input$conf.level
+  attr(res, "conf.level") <- x$input$conf.level
   attr(res, "class") <- "Tukey"
   return(res)
 }
 
 CIplot.Tukey <-
-    function(dat,
+    function(x,
              xlim = NULL, xlab = "Differences in mean", main = NULL,
              pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
              cilty = 1, cilwd = 1, cicol = "black",
@@ -207,13 +207,13 @@ CIplot.Tukey <-
              las = NULL,
              ...)
 {
-    xi <- dat
+    xi <- x
     yvals <- nrow(xi):1L
 
-    if (is.null(xlim)) xlim <- c(min(dat[,1:3]), max(dat[,1:3]))
+    if (is.null(xlim)) xlim <- c(min(x[,1:3]), max(x[,1:3]))
 
     if (is.null(main)) {
-        main <- paste0(format(100 * attr(dat, "conf.level"), digits = 2L),
+        main <- paste0(format(100 * attr(x, "conf.level"), digits = 2L),
                        "% confidence interval")
     }
 
