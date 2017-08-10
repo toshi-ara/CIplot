@@ -13,8 +13,8 @@ x <- rnorm(10, 10, 2); y <- rnorm(10, 8, 2)
 res <- t.test(x, y)
 CIplot(res)
 
-dat <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
-res <- fisher.test(dat)
+x <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
+res <- fisher.test(x)
 CIplot(res, log = TRUE)
 
 
@@ -26,12 +26,10 @@ CIplot(res, log = TRUE)
 library(MASS)
 data(birthwt)
 
-GLM1 <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,
-            family = binomial)
-CIplot(GLM1, las = 1)
+x <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,
+         family = binomial)
+CIplot(x, las = 1)
 
-## res <- ORci(GLM1, conf.level = 0.95)
-## CIplot(res, las = 1)
 
 ####################
 # CIplot.Tukey
@@ -40,7 +38,7 @@ CIplot(GLM1, las = 1)
 ####################
 
 library(userfriendlyscience)
-res <- posthocTGH(warpbreaks$breaks, warpbreaks$tension)
-CIplot(res, las = 1)
+x <- posthocTGH(warpbreaks$breaks, warpbreaks$tension)
+CIplot(x, las = 1)
 
 
