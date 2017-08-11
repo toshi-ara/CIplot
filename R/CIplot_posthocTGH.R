@@ -1,3 +1,12 @@
+#' @rdname CIplot
+#' @aliases CIplot.posthocTGH CIplot.Tukey
+#'
+#' @method CIplot posthocTGH
+#' @export
+#'
+#' @keywords plot
+#' @keywords posthocTGH
+#'
 CIplot.posthocTGH <-
     function(x,
              xlog = FALSE, xlim = NULL, xlab = "Differences in mean",
@@ -49,27 +58,5 @@ CIplot.Tukey <-
                   v = v, vlty = vlty, vlwd = vlwd,  vcol = vcol,
                   main = NULL,
                   ...)
-
-    ## plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2L),
-    ##      type = "n", axes = FALSE,
-    ##      xlab = xlab, ylab = "",
-    ##      xlim = xlim,
-    ##      ylim = c(0.5, nrow(xi) + 0.5),
-    ##      main = main)
-
-    ## axis(1, ...)
-    ## axis(2, at = nrow(xi):1,
-    ##      labels = dimnames(xi)[[1L]], las = las)
-
-    ## abline(h = yvals, lty = 1, lwd = 1, col = "lightgray")
-    ## abline(v = 0, lty = vlty, lwd = vlwd, col = vcol)
-
-    ## arrows(xi[, "lwr"], yvals, xi[, "upr"], yvals,
-    ##        code = 3, angle = 90, length = 0.15,
-    ##        lty = cilty, lwd = cilwd, col = cicol)
-    ## points(xi[, 1], yvals, pch = pch, cex = pcex,
-    ##        col = pcol, bg = pcolbg)
-
-    ## box()
 }
 

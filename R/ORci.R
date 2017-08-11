@@ -1,3 +1,26 @@
+#' Calculate odds ratios and their confidence intervals
+#' from \code{glm} object
+#'
+#' @export
+#'
+#' @param x \code{glm} object (logistic regression only!).
+#' @param conf.level the confidence interval. Default is 0.95.
+#' @return an object class \code{ORci} with three columns.
+#'   \itemize{
+#'    \item OR: odds ratio
+#'    \item lwr: lower conficence intarval
+#'    \item upr: upper conficence intarval
+#'   }
+#'
+#' @examples
+#' require(graphics)
+#' require(MASS)
+#' data(birthwt)
+#' x <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,
+#'          family = binomial)
+#' OR1 <- ORci(x)
+#' CIplot(OR1, las = 1)
+
 ORci <-
     function(x, conf.level = 0.95)
 {
@@ -10,12 +33,5 @@ ORci <-
     attr(OR, "conf.level") <- conf.level
     attr(OR, "class") <- "ORci"
     return(OR)
-}
-
-print.ORci <- function(x, ...)
-{
-    attr(x, "conf.level") <- NULL
-    attr(x, "class") <- NULL
-    print(x, ...)
 }
 

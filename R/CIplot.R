@@ -1,48 +1,83 @@
+#' Plot Confidential Interval
+#'
+#' A function to plot confidential interval for
+#' such as \code{htest}, \code{glm}
+#' (logistic regression only!)
+#' and \code{posthocTGH} (\pkg{userfriendlyscience}) objects.
+#'
+#' @importFrom stats coefficients confint
+#' @importFrom graphics abline arrows axis box plot points
+#'
+#' @export
+#'
+#' @param x an object: \code{htest},
+#'          \code{glm} (logistic regression only!)
+#'          or \code{posthocTGH} (\pkg{userfriendlyscience}).
+#' @param xlog (logical) if \code{log} is \code{TRUE},
+#'             the x axis is drawn logarithmically.
+#'             Default is \code{FALSE}.
+#' @param xlab a title for the plot.
+#' @param xlim the x limits (x1, x2) of the plot.
+#' @param yname If \code{yname} is \code{TRUE},
+#'              the name of comparison between groups are shown.
+#' @param las  numeric in {0,1,2,3}; the style of axis labels.
+#'             Default is 0. see also \code{par}.
+#' @param pch plotting 'character', i.e., symbol to use.
+#' @param pcol color code or name of the points.
+#' @param pcolbg background (fill) color for the open plot symbols
+#'               given by 'pch = 21:25'.
+#' @param pcex character (or symbol) expansion of points.
+#' @param cilty line types of conficence intervals.
+#' @param cilwd line width of conficence intervals.
+#' @param cicol color code or name of conficence intervals.
+#' @param v the x-value(s) for vertical line.
+#' @param vlty line types of vertical line.
+#' @param vlwd line width of vertical line.
+#' @param vcol color code or name of vertical line.
+#' @param main  a main title for the plot.
+#' @param \dots other options for x-axis.
+#'
+#' @note \code{CIplot} was made based on \code{plot.TukeyHSD}.
+#'  \preformatted{
+#'  #  File src/library/stats/R/TukeyHSD.R
+#'  #  Part of the R package, https://www.R-project.org
+#'  #
+#'  #  Copyright (C) 2000-2001  Douglas M. Bates
+#'  #  Copyright (C) 2002-2015  The R Core Team
+#' }
+#'
+#' @seealso \code{plot}, \code{axis}, \code{points}, \code{par}.
+#'
+#' @examples
+#' require(graphics)
+#'
+#' ## 'htest' objects
+#' set.seed(1234)
+#' x <- rnorm(10, 10, 2); y <- rnorm(10, 8, 2)
+#' res <- t.test(x, y)
+#' CIplot(res)
+#'
+#' x <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
+#' res <- fisher.test(x)
+#' CIplot(res, log = TRUE)
+#'
+#' ## 'glm' object: logistic regression only!
+#' ## odds ratio
+#' require(MASS)
+#' data(birthwt)
+#' x <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,
+#'          family = binomial)
+#' CIplot(x, las = 1)
+#'
+#' ## 'posthocTGH' object
+#' ## Tukey or Games-Howell methos
+#' if (require(userfriendlyscience)) {
+#'     x <- posthocTGH(warpbreaks$breaks, warpbreaks$tension)
+#'     CIplot(x, las = 1)
+#' }
+#'
+#' @keywords plot
+#' 
 CIplot <-
     function(x, ...) UseMethod("CIplot")
-
-## x: data.frame(estimation, lwr, upr)
-##    atr(x, "conf.level")
-## requires: v
-CIplot.common <-
-    function(x,
-             xlog = FALSE, xlim = NULL, xlab = NULL,             ## x-axis
-             yname = TRUE, las = 0,                              ## y-axis
-             pch = 21, pcol = 1, pcolbg = "white", pcex = 1,     ## points
-             conf.level = 0.95, cilty = 1, cilwd = 1, cicol = 1, ## conf.int
-             v, vlty = 2, vlwd = 1,  vcol = 1,                   ## vertical
-             main = NULL,                                        ## Title
-             ...)
-{
-    if (is.null(main)) {
-        main <- paste0(format(100 * conf.level, digits = 2L),
-                       "% confidence interval")
-    }
-
-    xi <- x[,1:3]         ## estimation, lwr, upr
-    yvals <- nrow(xi):1L
-
-    if (is.null(xlim)) xlim <- c(min(xi), max(xi))
-
-    plot(c(xi[,"lwr"], xi[,"upr"]), rep.int(yvals, 2L),
-         type = "n", axes = FALSE,
-         xlab = xlab, ylab = "",
-         xlim = xlim, log = ifelse(xlog, "x", ""),
-         ylim = c(0.5, nrow(xi) + 0.5),
-         main = main)
-
-    axis(1, ...)
-    if (yname) {
-        axis(2, at = nrow(xi):1,
-             labels = dimnames(xi)[[1L]], las = las)
-    }
-
-    arrows(xi[, "lwr"], yvals, xi[, "upr"], yvals,
-           code = 3, angle = 90, length = 0.15,
-           lty = cilty, lwd = cilwd, col = cicol)
-    points(xi[, 1], yvals, pch = pch, cex = pcex,
-           col = pcol, bg = pcolbg)
-    abline(v = v, lty = vlty, lwd = vlwd, col = vcol)
-    box()
-}
 

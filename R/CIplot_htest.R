@@ -1,3 +1,12 @@
+#' @rdname CIplot
+#' @aliases CIplot.htest
+#'
+#' @method CIplot htest
+#' @export
+#'
+#' @keywords plot
+#' @keywords htest
+#'
 CIplot.htest <-
     function(x,
              xlog = FALSE, xlim = NULL, xlab = NULL,
