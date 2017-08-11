@@ -59,7 +59,7 @@
 #'
 #' x <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
 #' res <- fisher.test(x)
-#' CIplot(res, log = TRUE)
+#' CIplot(res, xlog = TRUE)
 #'
 #' ## 'glm' object: logistic regression only!
 #' ## odds ratio
