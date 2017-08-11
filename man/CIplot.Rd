@@ -15,44 +15,46 @@
 \usage{
 CIplot(x, ...)
 \method{CIplot}{htest}(x,
-       log = FALSE,
-       xlim = NULL, xlab = NULL, main = NULL,
-       pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
-       cilty = 1, cilwd = 1, cicol = "black",
-       v = NULL, vlty = 2, vlwd = 1,  vcol = "black",
+       xlog = FALSE, xlim = NULL, xlab = NULL,
+       yname = FALSE, las = 0,
+       pch = 21, pcol = 1, pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = 1,
+       v = NULL, vlty = 2, vlwd = 1,  vcol = 1,
+       main = NULL,
        ...)
 \method{CIplot}{glm}(x,
        conf.level = 0.95,
-       xlim = NULL, xlab = "Odds Ratio",
+       xlog = TRUE, xlim = NULL, xlab = "Odds Ratio",
+       yname = TRUE, las = 0,
+       pch = 21, pcol = 1, pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = 1,
+       v = 1, vlty = 2, vlwd = 1,  vcol = 1,
        main = NULL,
-       pch = 21, pcol = "black",
-       pcolbg = "white", pcex = 1, cilty = 1, cilwd = 1,
-       cicol = "black", vlty = 2, vlwd = 1,  vcol = "black",
-       las = NULL,
-       ...)
+      ...)
 \method{CIplot}{ORci}(x,
-       xlim = NULL, xlab = "Odds Ratio", main = NULL,
-       pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
-       cilty = 1, cilwd = 1, cicol = "black",
-       vlty = 2, vlwd = 1,  vcol = "black",
-       las = NULL,
+       xlog = TRUE, xlim = NULL, xlab = "Odds Ratio",
+       yname = TRUE, las = 0,
+       pch = 21, pcol = 1, pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = 1,
+       v = 1, vlty = 2, vlwd = 1,  vcol = 1,
+       main = NULL,
        ...)
 \method{CIplot}{posthocTGH}(x,
-       xlim = NULL, xlab = "Differences in mean", main = NULL,
-       pch = 21, pcol = "black", pcolbg = "white", pcex = 1,
-       cilty = 1, cilwd = 1, cicol = "black",
-       vlty = 2, vlwd = 1,  vcol = "black",
-       las = NULL,
+       xlog = FALSE, xlim = NULL, xlab = "Differences in mean",
+       yname = TRUE, las = 0,
+       pch = 21, pcol = 1, pcolbg = "white", pcex = 1,
+       cilty = 1, cilwd = 1, cicol = 1,
+       v = 0, vlty = 2, vlwd = 1,  vcol = 1,
+       main = NULL,
        ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
+\item{x}{
     an object: '\code{htest}', '\code{glm}' (logistic regression only!)
     or '\code{posthocTGH}' (\pkg{userfriendlyscience}).
 }
-\item{log}{
-  '\code{htest}' object only.
+\item{xlog}{
   (logical) if \code{log} is \code{TRUE},
   the x axis is drawn logarithmically.
   Default is \code{FALSE}.
@@ -63,8 +65,13 @@ CIplot(x, ...)
 \item{xlab}{
   a title for the plot.
 }
-\item{main}{
-  a main title for the plot.
+\item{yname}{
+  If \code{yname} is \code{TRUE},
+  the name of comparison between groups are shown.
+}
+\item{las}{
+  numeric in {0,1,2,3}; the style of axis labels.
+  Default is 0. see also \code{par}.
 }
 \item{pch}{
   plotting 'character', i.e., symbol to use.
@@ -89,7 +96,6 @@ CIplot(x, ...)
   color code or name of conficence intervals.
 }
 \item{v}{
-  '\code{htest}' object only.
   the x-value(s) for vertical line.
 }
 \item{vlty}{
@@ -106,9 +112,8 @@ CIplot(x, ...)
   the confidence interval. Default is 0.95.
   see also \code{\link{ORci}}.
 }
-\item{las}{
-  numeric in {0,1,2,3}; the style of axis labels.
-  see also \code{par}.
+\item{main}{
+  a main title for the plot.
 }
 \item{\dots}{
   other options for x-axis.
@@ -132,13 +137,12 @@ CIplot(x, ...)
 }
 \note{
   \code{CIplot} was made based on \code{plot.TukeyHSD}.
-
   \preformatted{
-    #  File src/library/stats/R/TukeyHSD.R
-    #  Part of the R package, https://www.R-project.org
-    #
-    #  Copyright (C) 2000-2001  Douglas M. Bates
-    #  Copyright (C) 2002-2015  The R Core Team
+  #  File src/library/stats/R/TukeyHSD.R
+  #  Part of the R package, https://www.R-project.org
+  #
+  #  Copyright (C) 2000-2001  Douglas M. Bates
+  #  Copyright (C) 2002-2015  The R Core Team
 }
 }
 
