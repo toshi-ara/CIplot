@@ -12,7 +12,6 @@
 #' @seealso \code{glm}, \code{\link{ORci}}.
 #' 
 #' @examples
-#' require(graphics)
 #' require(MASS)
 #' data(birthwt)
 #' x <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,

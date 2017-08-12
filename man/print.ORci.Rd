@@ -16,7 +16,6 @@ of \code{ORci} object}
 Print odds ratios and their confidence intervals of \code{ORci} object.
 }
 \examples{
-require(graphics)
 require(MASS)
 data(birthwt)
 x <- glm(low ~  age + lwt + smoke + ptl + ht + ui, data = birthwt,
