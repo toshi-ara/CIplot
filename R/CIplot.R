@@ -1,8 +1,8 @@
 #' Plot Confidential Interval
 #'
 #' A function to plot confidential interval for
-#' such as \code{htest}, \code{glm}
-#' (logistic regression only!)
+#' such as \code{htest}, \code{TukeyHSD},
+#' \code{glm} (logistic regression only!)
 #' and \code{posthocTGH} (\pkg{userfriendlyscience}) objects.
 #'
 #' @importFrom stats coefficients confint
@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @param x an object: \code{htest},
+#'          \code{TukeyHSD},
 #'          \code{glm} (logistic regression only!)
 #'          or \code{posthocTGH} (\pkg{userfriendlyscience}).
 #' @param xlog (logical) if \code{log} is \code{TRUE},

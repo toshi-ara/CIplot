@@ -6,9 +6,9 @@ Date: 2017-08-12
 Author: Toshiaki Ara
 Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
 Description: Plot interval confidence from the objects of statistical tests
-  such as t.test, var.test, prop.test and fisher.test ('htest' class),
-  logistic regression ('glm' function), and Tukey or Games-Howell test
-  ('posthocTGH' function in userfriendlyscience package).
+  such as t.test, var.test, cor.test, prop.test and fisher.test ('htest' class),
+  Tukey test ('TukeyHSD' function), logistic regression ('glm' function),
+  and Tukey or Games-Howell test ('posthocTGH' function in userfriendlyscience package).
   Users are able to set the styles of lines and points.
   This package contains the function to caluculate odds ratios and
   thier conficence interval from the result of logistic regression.
@@ -22,6 +22,7 @@ Collate:
     'CI.posthocTGH.R'
     'CIplot.R'
     'CIplot.htest.R'
+    'CIplot.TukeyHSD.R'
     'CIplot.glm.R'
     'CIplot.ORci.R'
     'CIplot.common.R'

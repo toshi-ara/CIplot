@@ -1,5 +1,5 @@
 #' @rdname CIplot
-#' @include CIplot.htest.R
+#' @include CIplot.TukeyHSD.R
 #'
 #' @method CIplot glm
 #' @export
