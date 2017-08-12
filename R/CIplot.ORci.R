@@ -1,10 +1,8 @@
 #' @rdname CIplot
-#' @aliases CIplot.ORci
+#' @include CIplot.glm.R
 #'
 #' @method CIplot ORci
 #' @export
-#'
-#' @import MASS
 #'
 #' @keywords plot
 #' @keywords ORci

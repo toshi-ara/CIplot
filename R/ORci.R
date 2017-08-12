@@ -1,15 +1,17 @@
 #' Calculate odds ratios and their confidence intervals
 #' from \code{glm} object
 #'
+#' @import MASS
+#'
 #' @export
 #'
 #' @param x \code{glm} object (logistic regression only!).
 #' @param conf.level the confidence interval. Default is 0.95.
 #' @return an object class \code{ORci} with three columns.
-#'   \itemize{
-#'    \item OR: odds ratio
-#'    \item lwr: lower conficence intarval
-#'    \item upr: upper conficence intarval
+#'   \describe{
+#'    \item{OR}{odds ratio}
+#'    \item{lwr}{lower conficence intarval}
+#'    \item{upr}{upper conficence intarval}
 #'   }
 #'
 #' @examples

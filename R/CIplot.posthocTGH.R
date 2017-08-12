@@ -1,5 +1,7 @@
 #' @rdname CIplot
-#' @aliases CIplot.posthocTGH CIplot.Tukey
+#' @include CIplot.R
+#'
+#' @aliases CIplot.posthocTGH
 #'
 #' @method CIplot posthocTGH
 #' @export
@@ -28,6 +30,7 @@ CIplot.posthocTGH <-
                  ...)
 }
 
+#' @aliases CIplot.Tukey
 CIplot.Tukey <-
     function(x,
              xlog = FALSE, xlim = NULL, xlab = "Differences in mean",

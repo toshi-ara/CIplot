@@ -14,10 +14,10 @@ ORci(x, conf.level = 0.95)
 }
 \value{
 an object class \code{ORci} with three columns.
-  \itemize{
-   \item OR: odds ratio
-   \item lwr: lower conficence intarval
-   \item upr: upper conficence intarval
+  \describe{
+   \item{OR}{odds ratio}
+   \item{lwr}{lower conficence intarval}
+   \item{upr}{upper conficence intarval}
   }
 }
 \description{

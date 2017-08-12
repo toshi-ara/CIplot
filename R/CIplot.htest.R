@@ -1,5 +1,5 @@
 #' @rdname CIplot
-#' @aliases CIplot.htest
+#' @include CIplot.R
 #'
 #' @method CIplot htest
 #' @export

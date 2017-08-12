@@ -1,10 +1,8 @@
 #' @rdname CIplot
-#' @aliases CIplot.glm
+#' @include CIplot.htest.R
 #'
 #' @method CIplot glm
 #' @export
-#'
-#' @import MASS
 #'
 #' @param conf.level \code{glm} object only.
 #'                   the confidence interval. Default is 0.95.
