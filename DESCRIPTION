@@ -2,7 +2,7 @@ Package: CIplot
 Type: Package
 Title: Functions to Plot Confidential Interval
 Version: 1.0
-Date: 2017-08-11
+Date: 2017-08-12
 Author: Toshiaki Ara
 Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
 Description: Plot interval confidence from the objects of statistical tests
