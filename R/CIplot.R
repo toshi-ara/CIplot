@@ -2,6 +2,7 @@
 #'
 #' A function to plot confidential interval for
 #' such as \code{htest}, \code{TukeyHSD},
+#' \code{glht} (\pkg{multcomp}),
 #' \code{glm} (logistic regression only!)
 #' and \code{posthocTGH} (\pkg{userfriendlyscience}) objects.
 #'
@@ -10,8 +11,8 @@
 #'
 #' @export
 #'
-#' @param x an object: \code{htest},
-#'          \code{TukeyHSD},
+#' @param x an object: \code{htest}, \code{TukeyHSD},
+#'          \code{glht} (\pkg{multcomp}),
 #'          \code{glm} (logistic regression only!)
 #'          or \code{posthocTGH} (\pkg{userfriendlyscience}).
 #' @param xlog (logical) if \code{log} is \code{TRUE},
@@ -52,17 +53,47 @@
 #' @examples
 #' require(graphics)
 #'
-#' ## 'htest' objects
+#' ##### 'htest' objects
+#' ## t test
 #' set.seed(1234)
 #' x <- rnorm(10, 10, 2); y <- rnorm(10, 8, 2)
 #' res <- t.test(x, y)
 #' CIplot(res)
 #'
+#' ## Fisher's exact test
 #' x <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
 #' res <- fisher.test(x)
 #' CIplot(res, xlog = TRUE)
 #'
-#' ## 'glm' object: logistic regression only!
+#' ##### 'TukeyHSD' objects
+#' ## Tukey test
+#' aov1 <- aov(breaks ~ tension + wool, data = warpbreaks)
+#' x <- TukeyHSD(aov1)
+#'
+#' oldpar <- par(no.readonly = TRUE)
+#' par(mfrow = c(1, 2))
+#' CIplot(x, las = 1)
+#' par(oldpar)
+#'
+#' ## example of line type and color
+#' aov1 <- aov(breaks ~ tension, data = warpbreaks)
+#' x <- TukeyHSD(aov1)
+#' CIplot(x, las = 1,
+#'        pcol = 2:4, pcolbg = 2:4, cicol = 2:4,
+#'        vlty = 1, vcol = "gray")
+#'
+#' ##### 'glht' objects
+#' ## Tukey test
+#' require(multcomp)
+#' aov1 <- aov(breaks ~ tension, data = warpbreaks)
+#' x <- glht(aov1, linfct = mcp(tension = "Tukey"))
+#' CIplot(x, las = 1)
+#'
+#' ## Dunnett test
+#' x <- glht(aov1, linfct = mcp(tension = "Dunnett"))
+#' CIplot(x, las = 1)
+#'
+#' ##### 'glm' object: logistic regression only!
 #' ## odds ratio
 #' require(MASS)
 #' data(birthwt)
@@ -70,7 +101,7 @@
 #'          family = binomial)
 #' CIplot(x, las = 1)
 #'
-#' ## 'posthocTGH' object
+#' ##### 'posthocTGH' object
 #' ## Tukey or Games-Howell methos
 #' if (require(userfriendlyscience)) {
 #'     x <- posthocTGH(warpbreaks$breaks, warpbreaks$tension)
