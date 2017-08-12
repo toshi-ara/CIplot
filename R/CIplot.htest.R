@@ -54,7 +54,7 @@ CIplot.htest <-
                   conf.level = attr(x$conf.int, "conf.level"),
                   cilty = cilty, cilwd = cilwd, cicol = cicol,
                   v = v, vlty = vlty, vlwd = vlwd,  vcol = vcol,
-                  main = NULL,
+                  main = main,
                   ...)
 }
 

@@ -44,11 +44,6 @@ CIplot.Tukey <-
 
     if (is.null(xlim)) xlim <- c(min(x[,1:3]), max(x[,1:3]))
 
-    if (is.null(main)) {
-        main <- paste0(format(100 * conf.level, digits = 2L),
-        "% confidence interval")
-    }
-
     CIplot.common(xi,
                   xlog = xlog, xlim = xlim, xlab = xlab,
                   yname = yname, las = las,
@@ -56,7 +51,7 @@ CIplot.Tukey <-
                   conf.level = conf.level,
                   cilty = cilty, cilwd = cilwd, cicol = cicol,
                   v = v, vlty = vlty, vlwd = vlwd,  vcol = vcol,
-                  main = NULL,
+                  main = main,
                   ...)
 }
 
