@@ -56,9 +56,13 @@
 #' ##### 'htest' objects
 #' ## t test
 #' set.seed(1234)
-#' x <- rnorm(10, 10, 2); y <- rnorm(10, 8, 2)
-#' res <- t.test(x, y)
-#' CIplot(res)
+#' a <- rnorm(10, 10, 2); b <- rnorm(10, 8, 2)
+#' x <- t.test(a, b)
+#' CIplot(x)
+#'
+#' ## binomial test
+#' x <- binom.test(5, 20)
+#' CIplot(x, xlim = c(0, 1))
 #'
 #' ## Fisher's exact test
 #' x <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
