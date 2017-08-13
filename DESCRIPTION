@@ -2,7 +2,7 @@ Package: CIplot
 Type: Package
 Title: Functions to Plot Confidential Interval
 Version: 1.0
-Date: 2017-08-12
+Date: 2017-08-13
 Author: Toshiaki Ara
 Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
 Description: Plot interval confidence from the objects of statistical tests
@@ -20,14 +20,13 @@ URL: https://github.com/toshi-ara/CIplot
 BugReports: https://github.com/toshi-ara/CIplot/issues/
 RoxygenNote: 6.0.1
 Collate: 
-    'CI.posthocTGH.R'
     'CIplot.R'
+    'CIplot.default.R'
     'CIplot.htest.R'
     'CIplot.TukeyHSD.R'
     'CIplot.glht.R'
     'CIplot.glm.R'
     'CIplot.ORci.R'
-    'CIplot.common.R'
     'CIplot.posthocTGH.R'
     'ORci.R'
     'print.ORci.R'

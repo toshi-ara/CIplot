@@ -7,7 +7,7 @@
 #'
 #' @param x \code{glm} object (logistic regression only!).
 #' @param conf.level the confidence interval. Default is 0.95.
-#' @return an object class \code{ORci} with three columns.
+#' @return an object \code{ORci} and \code{matirix} classes with three columns.
 #'   \describe{
 #'    \item{OR}{odds ratio}
 #'    \item{lwr}{lower conficence intarval}
@@ -33,7 +33,7 @@ ORci <-
     colnames(OR) <- c("OR", "lwr", "upr")
 
     attr(OR, "conf.level") <- conf.level
-    attr(OR, "class") <- "ORci"
+    attr(OR, "class") <- c("ORci", "matrix")
     return(OR)
 }
 

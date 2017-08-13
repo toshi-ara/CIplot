@@ -1,21 +1,33 @@
 #' @rdname CIplot
-#' @include CIplot.R
+#' @include CIplot.default.R
 #'
 #' @method CIplot htest
 #' @export
+#'
+#' @examples
+#' ##### 'htest' objects
+#' require(graphics)
+#'
+#' ## t test
+#' set.seed(1234)
+#' a <- rnorm(10, 10, 2); b <- rnorm(10, 8, 2)
+#' x <- t.test(a, b)
+#' CIplot(x)
+#'
+#' ## binomial test
+#' x <- binom.test(5, 20)
+#' CIplot(x, xlim = c(0, 1))
+#'
+#' ## Fisher's exact test
+#' x <- matrix(c(10, 7, 8, 9), 2, 2, byrow = TRUE)
+#' res <- fisher.test(x)
+#' CIplot(res, xlog = TRUE)
 #'
 #' @keywords plot
 #' @keywords htest
 #'
 CIplot.htest <-
-    function(x,
-             xlog = FALSE, xlim = NULL, xlab = NULL,
-             yname = FALSE, las = 0,
-             pch = 21, pcol = 1, pcolbg = "white", pcex = 1,
-             cilty = 1, cilwd = 1, cicol = 1,
-             v = NULL, vlty = 2, vlwd = 1,  vcol = 1,
-             main = NULL,
-             ...)
+    function(x, xlog = FALSE, xlim = NULL, xlab = NULL, yname = FALSE, v = NULL, ...)
 {
     est <- x$estimate
     ci <- x$conf.int
@@ -36,7 +48,7 @@ CIplot.htest <-
     }
 
     if (is.null(xlim)) {
-        xlim <<- c(min(v, ci[1]), max(v, ci[2]))
+        xlim <- c(min(v, ci[1]), max(v, ci[2]))
     }
 
     if (is.null(xlab)) {
@@ -47,14 +59,10 @@ CIplot.htest <-
     }
 
     tmp <- data.frame(estimate = est, lwr = ci[1], upr = ci[2])
-    CIplot.common(tmp,
-                  xlog = xlog, xlim = xlim, xlab = xlab,
-                  yname = yname, las = las,
-                  pch = pch, pcol = pcol, pcolbg = pcolbg, pcex = pcex,
-                  conf.level = attr(x$conf.int, "conf.level"),
-                  cilty = cilty, cilwd = cilwd, cicol = cicol,
-                  v = v, vlty = vlty, vlwd = vlwd,  vcol = vcol,
-                  main = main,
-                  ...)
+    CIplot.default(tmp, xlog = xlog, xlim = xlim, xlab = xlab,
+                   yname = yname,
+                   conf.level = attr(x$conf.int, "conf.level"),
+                   v = v,
+                   ...)
 }
 

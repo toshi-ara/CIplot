@@ -13,7 +13,7 @@ ORci(x, conf.level = 0.95)
 \item{conf.level}{the confidence interval. Default is 0.95.}
 }
 \value{
-an object class \code{ORci} with three columns.
+an object \code{ORci} and \code{matirix} classes with three columns.
   \describe{
    \item{OR}{odds ratio}
    \item{lwr}{lower conficence intarval}
