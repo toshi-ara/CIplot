@@ -1,18 +1,18 @@
 Package: CIplot
 Type: Package
-Title: Functions to Plot Confidential Interval
+Title: Functions to Plot Confidence Interval
 Version: 1.0
 Date: 2017-08-13
 Author: Toshiaki Ara
 Maintainer: Toshiaki Ara <toshiaki.ara@gmail.com>
-Description: Plot interval confidence from the objects of statistical tests
-  such as t.test, var.test, cor.test, prop.test and fisher.test ('htest' class),
-  Tukey test ('TukeyHSD' function), Dunnett test ('glht' function in 'multcomp'
-  package), logistic regression ('glm' function), and Tukey or Games-Howell test
-  ('posthocTGH' function in 'userfriendlyscience' package).
+Description: Plot confidence interval from the objects of statistical tests such as
+  t.test(), var.test(), cor.test(), prop.test() and fisher.test() ('htest' class),
+  Tukey test [TukeyHSD()], Dunnett test [glht() in 'multcomp' package],
+  logistic regression [glm()], and Tukey or Games-Howell test [posthocTGH() in
+  'userfriendlyscience' package].
   Users are able to set the styles of lines and points.
-  This package contains the function to caluculate odds ratios and  thier
-  conficence interval from the result of logistic regression.
+  This package contains the function to caluculate odds ratios and thier conficence
+  intervals from the result of logistic regression.
 Imports: MASS, multcomp
 Suggests: BSDA, fmsb, userfriendlyscience
 License: GPL (>= 2)
