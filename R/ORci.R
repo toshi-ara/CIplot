@@ -31,7 +31,7 @@ ORci <-
     ci <- confint(x, level = conf.level)
     p <- summary(x)$coefficients[-1, 4]
 
-    OR <- cbind(exp(cbind(est, ci)[-1,]), p)
+    OR <- cbind(exp(cbind(est, ci)[-1,, drop = FALSE]), p)
     colnames(OR) <- c("OR", "lwr", "upr", "p.value")
 
     attr(OR, "conf.level") <- conf.level
